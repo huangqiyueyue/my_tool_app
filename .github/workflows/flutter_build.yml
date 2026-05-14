@@ -14,17 +14,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Debug - Show current directory
+        run: pwd && ls -la
+
+      - name: Debug - Show environment
+        run: echo "Node.js version: $(node --version)" && echo "npm version: $(npm --version)"
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.10.0
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
 
+      - name: Debug - Flutter version
+        run: flutter --version
+
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug
+        run: flutter build apk --debug 2>&1 | head -200
 
       - name: Upload APK
         uses: actions/upload-artifact@v5
@@ -38,11 +47,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Debug - Show current directory
+        run: pwd && ls -la
+
+      - name: Debug - Show environment
+        run: echo "Node.js version: $(node --version)" && echo "npm version: $(npm --version)"
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.10.0
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
+
+      - name: Debug - Flutter version
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -50,11 +68,11 @@ jobs:
       - name: Install CocoaPods
         run: |
           cd ios
-          pod install
+          pod install 2>&1 | head -100
           cd ..
 
       - name: Build iOS simulator
-        run: flutter build ios --simulator --no-codesign
+        run: flutter build ios --simulator --no-codesign 2>&1 | head -200
 
       - name: Upload iOS app
         uses: actions/upload-artifact@v5
