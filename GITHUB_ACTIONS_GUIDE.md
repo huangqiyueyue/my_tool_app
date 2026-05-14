@@ -45,10 +45,32 @@ git push -u origin main
 
 #### 方法二：使用 GitHub Desktop
 
-1. 下载 GitHub Desktop：https://desktop.github.com
-2. File → Add Local Repository
-3. 选择项目目录
-4. Publish repository 到 GitHub
+```
+…or create a new repository on the command line
+echo "# my_tool_app" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/huangqiyueyue/my_tool_app.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin https://github.com/huangqiyueyue/my_tool_app.git
+git branch -M main
+git push -u origin main
+
+配置文件已更新！现在你需要将更新推送到 GitHub 仓库：
+
+​```
+cd 
+d:\douyinkaifangpingtai\code\mobilecode\my_tool_app
+git add .github/workflows/flutter_build.yml
+git commit -m "Fix Node.js 20 deprecation issue"
+git push origin main
+​```
+```
+
+
 
 ---
 
