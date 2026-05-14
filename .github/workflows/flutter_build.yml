@@ -18,7 +18,9 @@ jobs:
         run: pwd && ls -la
 
       - name: Debug - Show environment
-        run: echo "Node.js version: $(node --version)" && echo "npm version: $(npm --version)"
+        run: |
+          echo "Node.js version: $(node --version)"
+          echo "npm version: $(npm --version)"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.10.0
@@ -33,7 +35,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug 2>&1 | head -200
+        run: flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v5
@@ -51,7 +53,9 @@ jobs:
         run: pwd && ls -la
 
       - name: Debug - Show environment
-        run: echo "Node.js version: $(node --version)" && echo "npm version: $(npm --version)"
+        run: |
+          echo "Node.js version: $(node --version)"
+          echo "npm version: $(npm --version)"
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.10.0
@@ -68,11 +72,11 @@ jobs:
       - name: Install CocoaPods
         run: |
           cd ios
-          pod install 2>&1 | head -100
+          pod install
           cd ..
 
       - name: Build iOS simulator
-        run: flutter build ios --simulator --no-codesign 2>&1 | head -200
+        run: flutter build ios --simulator --no-codesign
 
       - name: Upload iOS app
         uses: actions/upload-artifact@v5
