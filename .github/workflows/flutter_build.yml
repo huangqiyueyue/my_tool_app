@@ -14,34 +14,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Debug - Show current directory
-        run: pwd && ls -la
-
-      - name: Debug - Show environment
-        run: |
-          echo "Node.js version: $(node --version)"
-          echo "npm version: $(npm --version)"
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.10.0
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
 
-      - name: Debug - Flutter version
-        run: flutter --version
-
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --debug
+      - name: Build Android App Bundle (Release)
+        run: flutter build appbundle --release
+
+      - name: Upload App Bundle
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-appbundle
+          path: build/app/outputs/bundle/release/app-release.aab
+
+      - name: Build Android APK (Release)
+        run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v5
         with:
           name: android-apk
-          path: build/app/outputs/flutter-apk/app-debug.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
 
   build_ios:
     runs-on: macos-14
@@ -49,22 +47,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Debug - Show current directory
-        run: pwd && ls -la
-
-      - name: Debug - Show environment
-        run: |
-          echo "Node.js version: $(node --version)"
-          echo "npm version: $(npm --version)"
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.10.0
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
-
-      - name: Debug - Flutter version
-        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -75,11 +62,11 @@ jobs:
           pod install
           cd ..
 
-      - name: Build iOS simulator
-        run: flutter build ios --simulator --no-codesign
+      - name: Build iOS (Release)
+        run: flutter build ios --release --no-codesign
 
       - name: Upload iOS app
         uses: actions/upload-artifact@v5
         with:
-          name: ios-simulator-app
-          path: build/ios/iphonesimulator/Runner.app
+          name: ios-app
+          path: build/ios/iphoneos/Runner.app
