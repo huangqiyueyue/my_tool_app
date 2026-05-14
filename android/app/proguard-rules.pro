@@ -38,3 +38,8 @@
 -keepclasseswithmembernames class * {
     native <methods>;
 }
+
+# Ignore missing Google Play Core classes (for App Bundle deferred components)
+-dontwarn com.google.android.play.core.splitcompat.**
+-dontwarn com.google.android.play.core.splitinstall.**
+-dontwarn com.google.android.play.core.tasks.**
