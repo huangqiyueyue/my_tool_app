@@ -38,10 +38,3 @@
 -keepclasseswithmembernames class * {
     native <methods>;
 }
-
-# Keep resources
--keepresources string.xml
--keepresources layout/**
--keepresources drawable/**
--keepresources mipmap/**
--keepresources values/**
